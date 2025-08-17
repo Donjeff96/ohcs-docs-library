@@ -44,21 +44,21 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                         {{-- @foreach ($listStaff as $item)
+                                         @foreach ($listFiles as $item)
                                         <tr>
                                             
                                             <td>{{$item->created_at}}</td>
-                                            <td> {{$item->name}}</td>
-                                            <td>{{$item->userGrade()}}</td>
-                                            <td> {{$item->email}}</td>
+                                            <td><b>{{$item->file_number}}</b></td>
+                                            <td>{{$item->name}}</td>
+                                            <td> {{$item->grader}}</td>
                                           
-                                            <td> {{$item->userCategory()}}</td>
+                                            <td> {{$item->getInstitution()->name}}</td>
                                             <td>
-                                            <a href="{{route('reassign_user_category',Crypt::encrypt($item->id))}}"> <span
+                                            <a target="_blank" href="{{route('edit-file-information',Crypt::encrypt($item->id))}}"> <span
                                                         class='fas fa-edit' style="color:blue;"></span> </a>
                                             </td>
                                         </tr>
-                                        @endforeach --}}
+                                        @endforeach
                                         
                                         
                                     </tbody>

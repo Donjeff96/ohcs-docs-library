@@ -95,6 +95,8 @@ Route::post('staff-list-search-process',[UserAlbumController::class,'listStaffPr
 Route::get('create-file',[StaffController::class,'createPersonel'])->name('create-file');
 Route::post('create-file-process',[StaffController::class,'createFileProcess'])->name('create-file-process');
 Route::get('list-files',[StaffController::class,'listFiles'])->name('list-files');
+Route::get('edit-file-information/{id}',[StaffController::class,'editFileView'])->name('edit-file-information');
+Route::post('edit-file-information-process/{id}',[StaffController::class,'updateFileProcess'])->name('edit-file-information-process');
 
 
 Route::get('staff-search',[StaffController::class,'searchForStaffView'])->name('staff-search');

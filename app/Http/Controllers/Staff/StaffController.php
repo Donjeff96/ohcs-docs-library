@@ -50,7 +50,58 @@ class StaffController extends Controller
 
     public function listFiles (){
 
-        return view ('staff.list-files');
+        $listFiles = PersonnelMain::get();
+
+        return view ('staff.list-files',[
+            'listFiles' => $listFiles
+        ]);
+    }
+
+    public function editFileView ($id){
+
+        $decodeID = Crypt::decrypt($id);
+
+        $data = PersonnelMain::find($decodeID);
+
+        $inistList = Institution::orderBy('name')->get();
+        $gradesList = Grade::orderBy('name')->get();
+
+
+        return view ('staff.edit-file',[
+            'data' => $data,
+            'inistList' => $inistList,
+            'gradesList' => $gradesList,
+            'id' => $id
+        ]);
+
+
+    }
+
+        public function updateFileProcess (Request $request,$id){
+
+        $this->validate($request,[
+            'full_name' => 'required',
+            'rank' => 'required',
+            'institution' => 'required',
+            'gender' => 'required',
+            'date_of_hire' => 'required'
+        ]);
+
+        $decodeID = Crypt::decrypt($id);
+
+        $insertRecord = PersonnelMain::find($decodeID);
+        $insertRecord->name = $request->full_name;
+        $insertRecord->rank = $request->rank;
+        $insertRecord->institution = $request->institution;
+        $insertRecord->grader = $request->gender;
+        $insertRecord->date_of_hire =$request->date_of_hire;
+        $insertRecord->date_of_retirement = $request->date_of_retirement;
+        $status = $insertRecord->update();
+
+         return $status ? back()->with('success','File updated successfully') :back()->with('error','Something went wrong, please try again.');
+
+
+       
     }
 
 
