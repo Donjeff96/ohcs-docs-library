@@ -48,6 +48,13 @@ class StaffController extends Controller
         ]);
     }
 
+    public function listFiles (){
+
+        return view ('staff.list-files');
+    }
+
+
+
     public function createFileProcess (Request $request){
 
         $this->validate($request,[
