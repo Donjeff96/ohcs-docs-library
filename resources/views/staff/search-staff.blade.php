@@ -8,7 +8,7 @@
             <div class="row page-titles mx-0">
                 <div class="col-sm-6 p-md-0">
                     <div class="welcome-text">
-                        <h4 class="text-primary">Staff Management</h4>
+                        <h4 class="text-primary">Search File</h4>
                     </div>
                 </div>
                 <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
@@ -39,7 +39,7 @@
                                     
                                     <div class="col-lg-4 col-sm-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Search by First name or Surname or Username" id="username" name="username" value="@session('username') {{session('username')}}@endsession">
+                                            <input type="text" class="form-control" placeholder="Search by Name or Serial Number" id="username" name="username" value="@session('username') {{session('username')}}@endsession">
                                             @error('username')
                                                 <small style="color: red">{{$message}}</small>
                                             @enderror
