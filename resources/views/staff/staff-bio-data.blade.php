@@ -33,23 +33,14 @@
                                     <div class="media align-self-start">
                                         
 
-                                            @if (key_exists('thumbnailphoto',$data[0]))
-                                            <img src="data:image/jpeg;base64,{{base64_encode($data[0]['thumbnailphoto'][0])}}" alt="image" class="rounded-circle shadow" width="90">
-                                            
-                                            @else
                                             <img alt="image" class="rounded-circle shadow" width="90"
-                                            src="{{asset('assets/images/client.jpg')}}">
-                                            @endif
+                                            src="{{asset('images/file_image.png')}}">
                                         <div class="pulse-css"></div>
                                     </div>
                                     <div class="media-body">
-                                        <h2 class="mb-2">{{$data[0]['displayname'][0]}}</h2>
-                                        <p class="mb-md-2 mb-sm-4 mb-2">{{ $data[0]['userprincipalname'][0]}}</p>
-                                            <p class="mb-md-2 mb-sm-4 mb-2">@if (key_exists('title',$data[0]))
-                                                {{ $data[0]['title'][0]}}
-                                                @else
-                                                <b style="color: red;">Not available</b>
-                                                @endif</p>
+                                        <h2 class="mb-2">{{ $userData->name }}</h2>
+                                        <p class="mb-md-2 mb-sm-4 mb-2">SN: {{ $userData->file_number }}</p>
+                                            <p class="mb-md-2 mb-sm-4 mb-2"><i class="fa fa-building"></i> {{ $userData->getInstitution()->name }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -71,16 +62,7 @@
                                     Personal Information
                                 </button>
                             </li>
-                            <li class="nav-item col-md-4" role="presentation">
-                                <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
-                                    data-bs-target="#contact" type="button" role="tab" aria-controls="contact"
-                                    aria-selected="false">Position and Promotion</button>
-                            </li>
-                            <li class="nav-item col-md-4" role="presentation">
-                                <button class="nav-link" id="job-tab" data-bs-toggle="tab"
-                                    data-bs-target="#job" type="button" role="tab" aria-controls="job"
-                                    aria-selected="false">Job and Qualification Information</button>
-                            </li>
+                            
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <br>
@@ -99,56 +81,38 @@
                                         <form>
                                             <div class="row">
 
-                                                <div class="col-xl-3">
+                                                <div class="col-xl-4">
                                                     <div class="form-group row">
-                                                        <label class="col-lg-4 col-form-label">Title 
+                                                        <label class="col-lg-4 col-form-label">Rank  
                                                             <span class="text-info">:</span>
                                                         </label>
                                                         <div class="col-lg-6">
-                                                            @if (key_exists('title',$data[0]))
-                                                                <b>{{ $data[0]['title'][0]}}</b>
-                                                            @else
-                                                              <b style="color: red;">Not available</b>
-                                                            @endif
+                                                            {{ $userData->getRank()->name }}
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-xl-3">
+                                                <div class="col-xl-4">
                                                     <div class="form-group row">
-                                                        <label class="col-lg-4 col-form-label">Name
+                                                        <label class="col-lg-4 col-form-label">Institution
                                                             <span class="text-info">:</span>
                                                         </label>
                                                         <div class="col-lg-6">
-                                                            <b>{{$data[0]['displayname'][0]}}</b>
+                                                            <b>{{ $userData->getInstitution()->name }}</b>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-xl-3">
+                                                <div class="col-xl-4">
                                                     <div class="form-group row">
-                                                        <label class="col-lg-4 col-form-label">Username
+                                                        <label class="col-lg-4 col-form-label">Gender
                                                             <span class="text-info">:</span>
                                                         </label>
                                                         <div class="col-lg-6">
-                                                            <b>{{ $data[0]['samaccountname'][0]}}</b>
+                                                            <b>{{ $userData->grader }}</b>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
-                                                <div class="col-xl-3">
-                                                    <div class="form-group row">
-                                                        <label class="col-lg-4 col-form-label">E-mail
-                                                            <span class="text-info">:</span>
-                                                        </label>
-                                                        <div class="col-lg-6">
-                                                            <b>{{ $data[0]['userprincipalname'][0]}}</b>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                 
                                             </div>
                                             
                                         </form>
@@ -168,19 +132,9 @@
                                                             <div class="form-group row widget-3 text-center">
                                  
 
-                                                            @if (key_exists('thumbnailphoto',$data[0]))
-                                                            
-                                                            <div class="preview">
-                                                                <img src="data:image/jpeg;base64,{{base64_encode($data[0]['thumbnailphoto'][0])}}" src="#" alt="img" height="200" width="200">
+                                                             <div class="preview">
+                                                                <img src="{{asset('assets/images/client.jpg')}}" src="#" alt="img" height="200" width="200">
                                                             </div>
-
-                                                            @else
-
-                                                            <div class="preview">
-                                                                <img id="file-ip-1-preview" src="#" alt="img">
-                                                            </div>
-
-                                                            @endif
                                                                     <b class="text-center">{{$userData->name}}</b>  
                                                             </div>
                                                         </div>
@@ -347,7 +301,7 @@
                                                                 <label class="form-label">Phone number <span style="color:red;">*</span></label>
                                                                     <input type="text" class="form-control"
                                                                     
-                                                                    placeholder=""  name="phone_number" id="phone_number" required value="@if (count($userData->getContactInformation())) {{$userData->getContactInformation()[0]->phone_number}} @else {{old('phone_number')}} @endif">
+                                                                    placeholder=""  name="phone_number" id="phone_number" required value="">
                                                                 <div class="col-lg-12">
                                                                 </div>
                                                                 @error('phone_number')
@@ -359,7 +313,7 @@
                                                             <div class="form-group">
                                                                 <label class="form-label">Personal Email <span style="color:red;">*</span></label>
                                                                     <input type="email" class="form-control"
-                                                                    placeholder=""  name="email" id="email" value="@if (count($userData->getContactInformation())) {{$userData->getContactInformation()[0]->emal}} @else {{old('email')}} @endif" required>
+                                                                    placeholder=""  name="email" id="email" value="" required>
                                                                     @error('email')
                                                                         <small style="color: red">{{$message}}</small>
                                                                     @enderror
@@ -371,13 +325,13 @@
                                                             <div class="form-group">
                                                                 <label class="form-label"> Digital Address
                                                                 </label>
-                                                                <input type="text" class="form-control" id="digital_address" name="digital_address" value="@if (count($userData->getContactInformation())) {{$userData->getContactInformation()[0]->digital_address}} @else {{old('digital_address')}} @endif">
+                                                                <input type="text" class="form-control" id="digital_address" name="digital_address" value="">
                                                             </div>
                                                         </div>
                                                         <div class="col-xl-6">
                                                             <div class="form-group">
                                                                 <label class="form-label">Postal Address</label>
-                                                                <input type="text" class="form-control" id="postal_address" name="postal_address" value="@if (count($userData->getContactInformation())) {{$userData->getContactInformation()[0]->postal_address}} @else {{old('postal_address')}} @endif">
+                                                                <input type="text" class="form-control" id="postal_address" name="postal_address" value="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -400,7 +354,7 @@
                                                     <div class="col-xl-6">
                                                         <div class="form-group">
                                                             <label class="form-label">Person Name <span style="color:red;">*</span></label>
-                                                            <input type="text" class="form-control" placeholder="Name" name="person_name" id="person_name" value="@if (count($userData->getEmergencyInformation())) {{$userData->getEmergencyInformation()[0]->name}} @else {{old('person_name')}} @endif">
+                                                            <input type="text" class="form-control" placeholder="Name" name="person_name" id="person_name" value="">
                                                             @error('person_name')
                                                                 <small style="color: red">{{$message}}</small>
                                                             @enderror
@@ -412,7 +366,7 @@
                                                             <select class="form-control form-select" id="relationship" name="relationship" required>
                                                                 <option value="">Choose Relationship</option>
                                                                 @foreach ($contactRelationshipList as $relationshipItem)
-                                                                   <option value="{{$relationshipItem->id}}" @if (count($userData->getEmergencyInformation())) @if ($relationshipItem->id == $userData->getEmergencyInformation()[0]->relationship_id) selected @endif @endif>{{$relationshipItem->name}}</option>
+                                                                   <option value="{{$relationshipItem->id}}" >{{$relationshipItem->name}}</option>
                                                                 @endforeach    
                                                             </select>
                                                             @error('relationship')
@@ -423,26 +377,26 @@
                                                     <div class="col-xl-6">
                                                         <div class="form-group">
                                                             <label class="form-label">Phone number</label>
-                                                            <input type="text" class="form-control" id="phone_number" placeholder="" name="phone_number" value="@if (count($userData->getEmergencyInformation())) {{$userData->getEmergencyInformation()[0]->phone_number}} @else {{old('phone_number')}} @endif">
+                                                            <input type="text" class="form-control" id="phone_number" placeholder="" name="phone_number" value="">
                                                         </div>
                                                     </div>
                                                     <div class="col-xl-6">
                                                         <div class="form-group">
                                                             <label class="form-label">Email</label>
-                                                            <input type="text" class="form-control" id="email" placeholder="" name="email" value="@if (count($userData->getEmergencyInformation())) {{$userData->getEmergencyInformation()[0]->emal}} @else {{old('email')}} @endif">
+                                                            <input type="text" class="form-control" id="email" placeholder="" name="email" value="">
                                                         </div>
                                                     </div>
                                                     <div class="col-xl-6">
                                                         <div class="form-group">
                                                             <label class="form-label"> Digital Address
                                                             </label>
-                                                            <input type="text" class="form-control" id="digital_address" name="digital_address" value="@if (count($userData->getEmergencyInformation())) {{$userData->getEmergencyInformation()[0]->digital_address}} @else {{old('digital_address')}} @endif">
+                                                            <input type="text" class="form-control" id="digital_address" name="digital_address" value="">
                                                         </div>
                                                     </div>
                                                     <div class="col-xl-6">
                                                         <div class="form-group">
                                                             <label class="form-label">Postal Address</label>
-                                                            <input type="text" class="form-control" id="postal_address" name="postal_address" value="@if (count($userData->getEmergencyInformation())) {{$userData->getEmergencyInformation()[0]->postal_address}} @else {{old('postal_address')}} @endif">
+                                                            <input type="text" class="form-control" id="postal_address" name="postal_address" value="">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -462,7 +416,7 @@
                                                     <div class="col-xl-6">
                                                         <div class="form-group">
                                                             <label class="form-label">Person Name <span style="color:red;">*</span></label>
-                                                            <input type="text" class="form-control" placeholder="Name" name="person_name" id="person_name" value="@if(count($userData->getnextOfKingInformation())){{$userData->getnextOfKingInformation()[0]->name}}@else{{old('person_name')}}@endif">
+                                                            <input type="text" class="form-control" placeholder="Name" name="person_name" id="person_name" value="">
                                                             @error('person_name')
                                                                 <small style="color: red">{{$message}}</small>
                                                             @enderror
@@ -474,7 +428,7 @@
                                                             <select class="form-control form-select" id="relationship" name="relationship" required>
                                                                 <option value="">Choose Relationship</option>
                                                                 @foreach ($contactRelationshipList as $relationshipItem)
-                                                                   <option value="{{$relationshipItem->id}}" @if (count($userData->getnextOfKingInformation())) @if ($relationshipItem->id == $userData->getnextOfKingInformation()[0]->relationship_id) selected @endif @endif>{{$relationshipItem->name}}</option>
+                                                                   <option value="{{$relationshipItem->id}}">{{$relationshipItem->name}}</option>
                                                                 @endforeach    
                                                             </select>
                                                             @error('relationship')
@@ -485,26 +439,26 @@
                                                     <div class="col-xl-6">
                                                         <div class="form-group">
                                                             <label class="form-label">Phone number</label>
-                                                            <input type="text" class="form-control" id="phone_number" placeholder="" name="phone_number" value="@if (count($userData->getnextOfKingInformation())) {{$userData->getnextOfKingInformation()[0]->phone_number}} @else {{old('phone_number')}} @endif">
+                                                            <input type="text" class="form-control" id="phone_number" placeholder="" name="phone_number" value="">
                                                         </div>
                                                     </div>
                                                     <div class="col-xl-6">
                                                         <div class="form-group">
                                                             <label class="form-label">Email</label>
-                                                            <input type="text" class="form-control" id="email" placeholder="" name="email" value="@if (count($userData->getnextOfKingInformation())) {{$userData->getnextOfKingInformation()[0]->emal}} @else {{old('email')}} @endif">
+                                                            <input type="text" class="form-control" id="email" placeholder="" name="email" value="">
                                                         </div>
                                                     </div>
                                                     <div class="col-xl-6">
                                                         <div class="form-group">
                                                             <label class="form-label"> Digital Address
                                                             </label>
-                                                            <input type="text" class="form-control" id="digital_address" name="digital_address" value="@if (count($userData->getnextOfKingInformation())) {{$userData->getnextOfKingInformation()[0]->digital_address}} @else {{old('digital_address')}} @endif">
+                                                            <input type="text" class="form-control" id="digital_address" name="digital_address" value="">
                                                         </div>
                                                     </div>
                                                     <div class="col-xl-6">
                                                         <div class="form-group">
                                                             <label class="form-label">Postal Address</label>
-                                                            <input type="text" class="form-control" id="postal_address" name="postal_address" value="@if (count($userData->getnextOfKingInformation())) {{$userData->getnextOfKingInformation()[0]->postal_address}} @else {{old('postal_address')}} @endif">
+                                                            <input type="text" class="form-control" id="postal_address" name="postal_address" value="">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -516,493 +470,7 @@
                                 </div>
                             </div>
                             
-                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                                <div class="row">
-                                    <div class="col-md-8 col-lg-8">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h4 class="card-title">Position and Promotion</h4>
-                                            </div>
-                                            <div class="card-body">
-                                                <form id="postingForms" method="POST">
-                                                    @csrf
-                                                    <div class="row">
-                                                        <div class="col-xl-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Promotion Type <span style="color:red;">*</span></label>
-                                                                <select class="form-control form-select" name="position_promotion" id="position_promotion" >
-        
-                                                                    <option value="">Promotion Type</option>
-                                                                    @foreach ($positionAndPromotionTypes as $positionAndPromotionTypesItem)
-                                                                      <option value="{{$positionAndPromotionTypesItem->id}}">{{$positionAndPromotionTypesItem->name}}</option>
-                                                                    @endforeach
-                                                                  
-                                                                </select>
-                                                                <small><b id="position_promotionerror"></b></small>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Grade <span style="color:red;">*</span></label>
-                                                                <select class="form-control form-select" name="grade" id="grade" >
-        
-                                                                    <option value="">Grade</option>
-
-                                                                    @foreach ($gradeList as $gradeItem)
-                                                                    <option value="{{$gradeItem->id}}">{{$gradeItem->name}}</option>
-                                                                    @endforeach
-                                                                   
-                                                                  
-                                                                </select>
-                                                                <small><b id="gradeerror"></b></small>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-xl-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Date <span style="color:red;">*</span></label>
-                                                                <input type="date" name="reference_date" id="reference_date" class="form-control">
-                                                                <small><b id="reference_dateerror"></b></small>
-                                                            </div>
-                                                             
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group text-right">
-                                                        <a id="submit" class="btn btn-primary float-end ">Add</a>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-
-                                <p align="center" style="display: none; color: limegreen;" id="waitCalTwo"><img src="{{ asset('images/spinner-grey.gif')}}" > Loading, please wait ...</p>
-                                <div id="results"></div>
-
-                                <div class="card m-t-30">
-                                    <div class="card-body">
-                                        <div class="card-header">
-                                            
-                                            <h4 class="card-title">Position and Promotion Records</h4>
-                                        </div>
-                                        <br><br>
-                                        @if (count($promotionUserList))
-
-                                            <div id="recordList">
-                                                <table id="example1" class="display nowrap">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Date</th>
-                                                            <th>Type</th>
-                                                            <th>Grade</th>
-                                                            <th></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($promotionUserList as $promotionUserListItem)
-                                                            <tr>
-                                                                <td style="color: green;" align="center">{{date('jS F Y',strtotime($promotionUserListItem->date))}}</td>
-                                                                <td>{{$promotionUserListItem->getTypeName()}}</td>
-                                                                <td>{{$promotionUserListItem->getGrade()}}</td>
-                                                                <td><a id="postingModalUpdate" data-bs-toggle='modal' data-bs-target='#addDrugs' data-id="{{$promotionUserListItem->id}}"><i class="fa fa-edit" style="color:red;"></i></a></td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </div>   
-                                            @else
-                                            <div id="recordList"></div>   
-                                        @endif
-                                        
-                                    </div>
-                                </div>
-
-                                <p align="center" style="display: none; color: limegreen;" id="waitCalThree"><img src="{{ asset('images/spinner-grey.gif')}}" > Loading, please wait ...</p>
-                                <div id="resultsThree"></div>
-
-                                <div class="row">
-                                    <div class="col-md-8 col-lg-8">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h4 class="card-title">Supervisor's Information</h4>
-                                            </div>
-                                            <div class="card-body">
-                                                <form id="supervisorForms" method="POST">
-        
-                                                    @csrf
-                                                    <div class="row">
-                                                        <div class="col-xl-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Full name <span style="color:red;">*</span></label>
-                                                                <input type="text" name="supervisors_name" id="supervisors_name" class="form-control">
-                                                                <small><b id="supervisors_nameerror"></b></small>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-5">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Grade <span style="color:red;">*</span></label>
-                                                                <select class="form-control form-select" name="supervisors_grade" id="supervisors_grade" >
-        
-                                                                    <option value="">Grade</option>
-
-                                                                    @foreach ($gradeList as $gradeItem)
-                                                                    <option value="{{$gradeItem->id}}">{{$gradeItem->name}}</option>
-                                                                    @endforeach
-                                                                   
-                                                                  
-                                                                </select>
-                                                                <small><b id="supervisors_gradeerror"></b></small>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-xl-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Staff ID <span style="color:red;">*</span></label>
-                                                                <input type="text" name="supervisors_staff_id" id="supervisors_staff_id" class="form-control">
-                                                                <small><b id="supervisors_staff_iderror"></b></small>
-                                                            </div>
-                                                             
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group text-right">
-                                                        <a id="addSuper" class="btn btn-primary float-end ">Add</a>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    @if (count($supervisorData))
-                                    <div class="col-md-4 col-lg-4">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h4 class="card-title">Supervisor</h4>
-                                            </div>
-                                            <div class="card-body">
-                                                <div id="recordListThree">
-                                                    <div class="d-flex justify-content-between doctor-info-details">
-                                                        <div class="d-flex left-content">
-                                                            <div class="media align-self-start">
-                                                                <img alt="image" class="rounded-circle shadow" width="90"
-                                                                src="{{asset('assets/images/profile_avater.png')}}">
-                                                                <div class="pulse-css"></div>
-                                                            </div>
-                                                            <div class="media-body">
-                                                                <h2 class="mb-2">{{$supervisorData[0]->name}}</h2>
-                                                                <p class="mb-md-2 mb-sm-4 mb-2">{{ $supervisorData[0]->getGrade()}}</p>
-                                                                    <p class="mb-md-2 mb-sm-4 mb-2">{{ $supervisorData[0]->staff_id}}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> 
-                                    </div> 
-                                    @else
-                                    <div class="col-md-4 col-lg-4">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h4 class="card-title">Supervisor</h4>
-                                            </div>
-                                            <div class="card-body">
-
-                                                <div class="d-flex justify-content-between doctor-info-details">
-                                                    <div class="d-flex left-content">
-
-                                                        <div id="recordListThree"></div>
-                                                        {{-- <div class="media align-self-start">
-                                                            <img alt="image" class="rounded-circle shadow" width="90"
-                                                            src="{{asset('assets/images/client.jpg')}}">
-                                                            <div class="pulse-css"></div>
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <h2 class="mb-2">{{$supervisorData[0]->name}}</h2>
-                                                            <p class="mb-md-2 mb-sm-4 mb-2">{{ $supervisorData[0]->getGrade()}}</p>
-                                                                <p class="mb-md-2 mb-sm-4 mb-2">{{ $supervisorData[0]->staff_id}}</p>
-                                                        </div> --}}
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-                                        </div> 
-                                    </div>
-                                        
-                                    @endif
-                                   
-                                    
-                                </div>
-                            </div>
-
-                            <div class="tab-pane fade" id="job" role="tabpanel" aria-labelledby="job-tab">
-                                <div class="row">
-                                    <div class="col-md-12 col-lg-12">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h4 class="card-title">Job and Qualification Information</h4>
-                                            </div>
-                                            <div class="card-body">
-                                                <form id="acadeForms">
-                                                    @csrf
-                                                    <div class="row">
-                                                        <div class="col-xl-4">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Highest Academic Qualification <span style="color:red;">*</span></label>
-                                                                <select class="form-control form-select" name="highest_academic_qualification" id="highest_academic_qualification">
-        
-                                                                    <option value="">Select Academic Qualification</option>
-                                                                    @foreach ($hQualifiaction as $hQualifiactionItem)
-                                                                      <option value="{{$hQualifiactionItem->id}}">{{$hQualifiactionItem->name}}</option>
-                                                                    @endforeach
-                                                                  
-                                                                </select>
-                                                                <small><b id="highest_academic_qualificationerror"></b></small>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-4">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Document Type <span style="color:red;">*</span></label>
-                                                                <select class="form-control form-select" name="document_type" id="document_type">
-        
-                                                                    <option value="">Select Document Type</option>
-                                                                    @foreach ($documentType as $documentTypeItem)
-                                                                      <option value="{{$documentTypeItem->id}}">{{$documentTypeItem->description}}</option>
-                                                                    @endforeach
-                                                                  
-                                                                </select>
-                                                                <small><b id="document_typeerror"></b></small>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-4">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Upload Academic Certificate <span style="color:red;">*</span></label>
-                                                                <br><br>
-                                                                <input type="file"  name="academic_document" id="academic_document" accept=".pdf">
-                                                                <small><b id="academic_documenterror"></b></small>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row">
-                                                        <div class="col-xl-4">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Professional Qualification</label>
-                                                                <input type="text" class="form-control" name="professional_qualification" id="professional_qualification">
-                                                                <small><b id="professional_qualificationerror"></b></small>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-4">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Document Type</label>
-                                                                <select class="form-control form-select" name="document_type_professional" id="document_type_professional">
-        
-                                                                    <option value="">Select Document Type</option>
-                                                                    @foreach ($documentType as $documentTypeItem)
-                                                                      <option value="{{$documentTypeItem->id}}">{{$documentTypeItem->description}}</option>
-                                                                    @endforeach
-                                                                  
-                                                                </select>
-                                                                <small><b id="document_type_professionalerror"></b></small>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-4">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Upload Professional Certificate</label>
-                                                                <br><br>
-                                                                <input type="file"  name="professional_document" id="professional_document" accept=".pdf">
-                                                                <small><b id="professional_documenterror"></b></small>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row">
-                                                        <div class="col-xl-4">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Job Cadre <span style="color:red;">*</span></label>
-                                                                <select class="form-control form-select" name="job_cadre" id="job_cadre">
-        
-                                                                    <option value="">Select Job Cadre</option>
-                                                                    <option value="Professional">Professional</option>
-                                                                    <option value="Sub Professional">Sub Professional</option>
-                                                                </select>
-                                                                <small><b id="job_cadreerror"></b></small>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-4">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Job Category <span style="color:red;">*</span></label>
-                                                                <select class="form-control form-select" name="job_category" id="job_category">
-        
-                                                                    <option value="">Select Job Category</option>
-                                                                    <option value="Senior">Senior</option>
-                                                                    <option value="Junior">Junior</option>
-                                                                   
-                                                                  
-                                                                </select>
-                                                                <small><b id="job_categoryerror"></b></small>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-4">
-                                                            <div class="form-group">
-                                                                <label class="form-label">Number Of Year at Ministry <span style="color:red;">*</span></label>
-                                                                
-                                                                <input class="form-control" type="number"  name="number_of_years" id="number_of_years" accept=".pdf">
-                                                                <small><b id="number_of_yearserror"></b></small>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="form-group text-right">
-                                                        <a id="submitDocs" class="btn btn-primary float-end ">Add</a>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-
-                                <p align="center" style="display: none; color: limegreen;" id="waitCalFour"><img src="{{ asset('images/spinner-grey.gif')}}" > Loading, please wait ...</p>
-                                <div id="resultFour"></div>
-
-                                <div class="row">
-                                    <div class="col-md-12 col-lg-12">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h4 class="card-title">Job and Qualification Information Records</h4>
-                                            </div>
-                                            <div class="card-body">
-                                                @if (count($jobQualificationInformation))
-                                                <div id="jobQualificationList">
-                                                    <table id="table" class="table table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Highest Academic Qualification</th>
-                                                                <th>Document</th>
-                                                                <th>Professional Qualification</th>
-                                                                <th>Document</th>
-                                                                <th>Job Cadre</th>
-                                                                <th>Job Category</th>
-                                                                <th>No. of Year at Ministry</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                           @foreach ($jobQualificationInformation as $jobQualificationInformationItem)
-                                                               <tr>
-                                                                  <td>{{$jobQualificationInformationItem->getHighestEducation()}}</td>
-                                                                  <td align="center">
-                                                                    @if ($jobQualificationInformationItem->getDocumentPath() != "not avaliable")
-                                                                        <a target="_blank" href="{{asset($jobQualificationInformationItem->getDocumentPath())}}"><i class="fa fa-file" style="color: red;"></i></a>
-                                                                    @endif
-                                                                  </td>
-                                                                  <td align="center">
-                                                                    @if (!empty($jobQualificationInformationItem->profeesional_qualification))
-                                                                       {{$jobQualificationInformationItem->profeesional_qualification}} 
-                                                                    @else
-                                                                        <b>Not available</b>
-                                                                    @endif
-                                                                </td>
-                                                                  <td align="center">@if ($jobQualificationInformationItem->getProfessionalDocumentPath() != "not avaliable")
-                                                                    <a target="_blank" href="{{asset($jobQualificationInformationItem->getProfessionalDocumentPath())}}"><i class="fa fa-file" style="color: red;"></i></a>
-                                                                 @endif</td>
-                                                                  <td align="center">{{$jobQualificationInformationItem->cadre}}</td>
-                                                                  <td align="center">{{$jobQualificationInformationItem->category}}</td>
-                                                                  <td align="center">{{$jobQualificationInformationItem->number_of_year}} {{Str::plural('year',(int)$jobQualificationInformationItem->number_of_year)}}</td>
-                                                               </tr>
-                                                           @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                </div>  
-                                                @else
-                                                  <div id="jobQualificationList"></div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-
-                                <div class="col-md-8 col-lg-8">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h4 class="card-title">Employee Compensation</h4>
-                                        </div>
-                                        <div class="card-body">
-                                            <p align="center" style="display: none; color: limegreen;" id="waitCalFive"><img src="{{ asset('images/spinner-grey.gif')}}" > Loading, please wait ...</p>
-                                            <div id="resultFive"></div>
-                                            <form id="compensationForm" method="POST">
-                                                @csrf
-                                                <div class="row">
-                                                    
-                                                    <div class="col-xl-6">
-                                                        <div class="form-group">
-                                                            <label class="form-label">Grade <span style="color:red;">*</span></label>
-                                                            <select class="form-control form-select" name="current_grade" id="current_grade" >
-    
-                                                                <option value="">Grade</option>
-
-                                                                @foreach ($gradeList as $gradeItem)
-                                                                <option value="{{$gradeItem->id}}" @if (count($userData->getEmployeeCompensation()) > 0) @if ($gradeItem->id == $userData->getEmployeeCompensation()[0]->current_grade) selected @endif @endif>{{$gradeItem->name}}</option>
-                                                                @endforeach
-                                                               
-                                                              
-                                                            </select>
-                                                            <small><b id="current_gradeerror"></b></small>
-                                                        </div>
-                                                        
-                                                    </div>
-                                                    <div class="col-xl-6">
-                                                        <div class="form-group">
-                                                            <label class="form-label">Salary Level <span style="color:red;">*</span></label>
-                                                            <input type="number" class="form-control" id="salary_level" name="salary_level" value="@if (count($userData->getEmployeeCompensation()) > 0){{$userData->getEmployeeCompensation()[0]->salary_level}}@endif">
-                                                            <small><b id="salary_levelerror"></b></small>
-                                                        </div>
-                                                        
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-xl-6">
-                                                        <div class="form-group">
-                                                            <label class="form-label">Salary Point <span style="color:red;">*</span></label>
-                                                            <input type="number" name="salary_point" id="salary_point" class="form-control" value="@if (count($userData->getEmployeeCompensation()) > 0){{$userData->getEmployeeCompensation()[0]->salary_point}}@endif">
-                                                            <small><b id="salary_pointerror"></b></small>
-                                                        </div>
-                                                         
-                                                    </div>
-                                                    <div class="col-xl-6">
-                                                        <div class="form-group">
-                                                            <label class="form-label">Management Unit</label>
-                                                            <select class="form-control form-select" name="management_unit" id="management_unit" >
-    
-                                                                
-
-                                                                @foreach ($managementUnitLIst as $managementUnitLIstItem)
-                                                                <option value="{{$managementUnitLIstItem->id}}" @if (count($userData->getEmployeeCompensation()) > 0) @if ($managementUnitLIstItem->id == $userData->getEmployeeCompensation()[0]->management_unit) selected @endif @endif>{{$managementUnitLIstItem->management_unit}}</option>
-                                                                @endforeach
-                                                               
-                                                              
-                                                            </select>
-                                                            <small><b id="management_uniterror"></b></small>
-                                                        </div>
-                                                        
-                                                    </div>
-                                                </div>
-                                                <div class="form-group text-right">
-                                                    <a id="addCompensation" class="btn btn-primary float-end ">Add</a>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                           
                         </div>
                     </div>
                 </div>
@@ -1012,73 +480,7 @@
 </div>
 
 
-<div class="modal fade selectRefresh" id="addDrugs" tabindex="-1" role="dialog"
-            aria-labelledby="modal-title-addDrug-modal">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modal-title-addDrug-modal"> Update Records </h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-            </div>
-            <div class="modal-body">
-                <p align="center" style="display: none; color: limegreen;" id="waitCalTwoModal"><img src="{{ asset('images/spinner-grey.gif')}}" > Loading, please wait ...</p>
-                <div id="resultsModal"></div>
-                <form id="postingFormsModal" method="POST">
-                    @csrf
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label class="form-label">Promotion Type</label>
-                                <select class="form-control form-select" name="modal_position_promotion" id="modal_position_promotion" >
 
-                                    <option value="">Promotion Type</option>
-                                    @foreach ($positionAndPromotionTypes as $positionAndPromotionTypesItem)
-                                        <option value="{{$positionAndPromotionTypesItem->id}}">{{$positionAndPromotionTypesItem->name}}</option>
-                                    @endforeach
-                                    
-                                </select>
-                                <small><b id="modal_position_promotionerror"></b></small>
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label class="form-label">Grade</label>
-                                <select class="form-control form-select" name="modal_grade" id="modal_grade" >
-
-                                    <option value="">Grade</option>
-
-                                    @foreach ($gradeList as $gradeItem)
-                                    <option value="{{$gradeItem->id}}">{{$gradeItem->name}}</option>
-                                    @endforeach
-                                    
-                                    
-                                </select>
-                                <small><b id="modal_gradeerror"></b></small>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label class="form-label">Date</label>
-                                <input type="date" name="modal_reference_date" id="modal_reference_date" class="form-control">
-                                <small><b id="modal_reference_dateerror"></b></small>
-                            </div>
-                                
-                        </div>
-                    </div>
-                    <input type="hidden" id="postingUpdateID" name="postingUpdateID">
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                <a id="updatePosting" class="btn btn-primary">Save changes</a>
-            </div>
-        </div>
-    </div>
-</div>
 
 @endsection
 
@@ -1089,9 +491,6 @@
 
 
         let position_promotion = $.trim($('#position_promotion').val());
-
-
-    
 
     if(position_promotion.length != 0){
 

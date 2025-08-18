@@ -101,7 +101,7 @@ Route::post('edit-file-information-process/{id}',[StaffController::class,'update
 
 Route::get('staff-search',[StaffController::class,'searchForStaffView'])->name('staff-search');
 Route::post('staff-search-process',[StaffController::class,'searchStaffProcess'])->name('staff-search-process');
-Route::get('fetch-user-bio-data/{userName}',[StaffController::class,'staffBioData'])->name('fetch-user-bio-data');
+Route::get('fetch-user-bio-data/{id}',[StaffController::class,'staffBioData'])->name('fetch-user-bio-data');
 
 
 

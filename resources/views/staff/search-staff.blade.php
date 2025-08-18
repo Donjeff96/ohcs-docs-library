@@ -61,22 +61,17 @@
                                 <table id="example1" class="display nowrap">
                                     <thead>
                                         <tr>
-                                            <th># </th>
+                                            <th>Created Date</th>
+                                            <th>File Number</th>
                                             <th>Name</th>
-                                            <th>Title</th>
-                                            <th>Username</th>
-                                            <th>Email</th>
-                                            <th>Unit / Division</th>
-                                            @if (auth()->user()->user_cat == 1 || auth()->user()->user_cat == 5 || auth()->user()->user_cat == 6  || auth()->user()->user_cat == 7 )
-                                             <th></th>
-                                            @endif
-                                            
+                                            <th>Gender</th>
+                                            <th>Institution</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
     
-                                        @for ($i = 1; $i <= (int)session('count'); $i++)
+                                        {{-- @for ($i = 1; $i <= (int)session('count'); $i++)
                                         <tr>
                                             
                                             <td align="center">
@@ -108,7 +103,22 @@
                                                 <a target="_blank" href="{{route('staff-bio-information',Crypt::encrypt(session('data')[$i-1]['userprincipalname'][0]))}}"> <span class='fas fa-eye' style="color:green;"> View</span> </a>
                                             </td>
                                         </tr>
-                                        @endfor
+                                        @endfor --}}
+
+                                        @foreach (@session('data') as $item)
+                                        <tr>
+                                            
+                                            <td>{{$item->created_at}}</td>
+                                            <td><b>{{$item->file_number}}</b></td>
+                                            <td>{{$item->name}}</td>
+                                            <td> {{$item->grader}}</td>
+                                          
+                                            <td> {{$item->getInstitution()->name}}</td>
+                                            <td>
+                                                <a href="{{route('fetch-user-bio-data',Crypt::encrypt($item->id))}}"> <span class='fas fa-user' style="color:blue;"> Capture</span> </a>
+                                            </td>
+                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table> 
                             </div>

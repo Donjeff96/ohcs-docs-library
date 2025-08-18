@@ -149,24 +149,13 @@ class StaffController extends Controller
             'username' => 'required'
         ]);
 
-        $ldap_con = ldap_connect(env('LDAP_IP'));
 
-        $ldap_dn = env('LDAP_DN');
-        $ldap_password = env('LDAP_PASSWORD');
+        if(PersonnelMain::where('file_number','LIKE','%'.$request->username.'%')->orWhere('name','LIKE','%'.$request->username.'%')->get()->count() > 0){
 
-        ldap_set_option($ldap_con, LDAP_OPT_PROTOCOL_VERSION, 3);
-
-        $username = trim($request->username);
-
-        if(@ldap_bind($ldap_con,$ldap_dn,$ldap_password)){
-
+            $data = PersonnelMain::where('file_number','LIKE','%'.$request->username.'%')->orWhere('name','LIKE','%'.$request->username.'%')->get();
             
-            $filter = "(|(sn=$username*)(givenname=$username*)(userprincipalname=$username*)(name=$username*))";
-           
-            $result = @ldap_search($ldap_con,env('LDAP_BASE_PATH'), $filter) or exit("Unable");
-            $entries = @ldap_get_entries($ldap_con, $result);
  
-            return back()->with(['data'=> $entries,'count' =>$entries['count'],'username' =>$username]);
+            return back()->with(['data'=> $data,'username' =>$request->username]);
 
         }else{
 
@@ -178,84 +167,25 @@ class StaffController extends Controller
     }
 
 
-    public function staffBioData($userName){
+    public function staffBioData($id){
 
-        $decodeData = Crypt::decrypt($userName);
+           $decodeData = Crypt::decrypt($id);
 
-        $ldap_con = ldap_connect(env('LDAP_IP'));
-
-        $ldap_dn = env('LDAP_DN');
-        $ldap_password = env('LDAP_PASSWORD');
-
-        ldap_set_option($ldap_con, LDAP_OPT_PROTOCOL_VERSION, 3);
-
-        $username = trim($decodeData);
-
-        if(@ldap_bind($ldap_con,$ldap_dn,$ldap_password)){
-
-            
-            $filter = "(|(userprincipalname=$username*))";
-           
-            $result = @ldap_search($ldap_con,env('LDAP_BASE_PATH'), $filter) or exit("Unable");
-            $entries = @ldap_get_entries($ldap_con, $result);
-
-            if(User::where('email',trim($entries[0]['userprincipalname'][0]))->get()->count() > 0){
-
-                $user = User::where('email', '=', trim($entries[0]['userprincipalname'][0]))->first();
-
-                $explodeDn = explode(',',$entries[0]['dn']);
-    
-                $exploadCat = explode('=',$explodeDn[1]);
-
-                $updateDetails = User::find($user->id);
-                if(key_exists('title',$entries[0])){$updateDetails->title = $entries[0]['title'][0];}
-                //$updateDetails->name =  $entries[0]['displayname'][0];
-                $updateDetails->category =  $exploadCat[1];
-                $updateDetails->dc =  $entries[0]['dn'];
-                if(key_exists('thumbnailphoto',$entries[0])){$updateDetails->photoUrl =  base64_encode($entries[0]['thumbnailphoto'][0]);}
-                $updateDetails->update();
-
-            }else{
-
-
-                $explodeDn = explode(',',$entries[0]['dn']);
-
-                $exploadCat = explode('=',$explodeDn[1]);
-
-                $insertUser = new User();
-                $insertUser->name =  $entries[0]['displayname'][0];
-                $insertUser->email = $entries[0]['userprincipalname'][0];
-                $insertUser->firstname =  $entries[0]['givenname'][0];
-                $insertUser->surname =  $entries[0]['sn'][0];
-                if(key_exists('title',$entries[0])){$insertUser->title = $entries[0]['title'][0];}
-                $insertUser->username =  $entries[0]['samaccountname'][0];
-                $insertUser->dc =  $entries[0]['dn'];
-
-                if(key_exists('thumbnailphoto',$entries[0])){$insertUser->photoUrl =  base64_encode($entries[0]['thumbnailphoto'][0]);}
-
-                
-                $insertUser->category =  $exploadCat[1];
-                $insertUser->password =  'No_PASSWORD';
-    
-                $insertUser->save();
-            }
-
-
-           $userData =  User::where('email',trim($entries[0]['userprincipalname'][0]))->get();
+           $userData =  PersonnelMain::find($decodeData);
 
            $contactRelationshipList = ContactRelationship::orderBy('name','ASC')->get();
 
            $positionAndPromotionTypes = PostionAndPromotionType::orderBy('id','ASC')->get();
            $gradeList = Grade::orderBy('name','ASC')->get();
-           $promotionUserList = PostionAndPromotion::where('user_id',$userData[0]->id)->orderBy('type_id','ASC')->get();
-           $supervisorData = SupervisorInformation::where('user_id',$userData[0]->id)->orderBy('id','DESC')->limit(1)->get();
+           $promotionUserList = PostionAndPromotion::where('user_id',$userData->id)->orderBy('type_id','ASC')->get();
+           $supervisorData = SupervisorInformation::where('user_id',$userData->id)->orderBy('id','DESC')->limit(1)->get();
            $hQualifiaction = AcademicQualification::get();
            $documentType = DocumentType::get();
-           $jobQualificationInformation = JobQualificationInformation::where('user_id',$userData[0]->id)->orderBy('id','DESC')->limit(1)->get();
+           $jobQualificationInformation = JobQualificationInformation::where('user_id',$userData->id)->orderBy('id','DESC')->limit(1)->get();
            $managementUnitLIst = ManagementUnit::get();
             return view('staff.staff-bio-data',[
-                'data' => $entries,
-                'userData' => $userData[0],
+                
+                'userData' => $userData,
                 'contactRelationshipList' => $contactRelationshipList,
                 'positionAndPromotionTypes' => $positionAndPromotionTypes,
                 'gradeList' => $gradeList,
@@ -266,15 +196,6 @@ class StaffController extends Controller
                 'jobQualificationInformation' => $jobQualificationInformation,
                 'managementUnitLIst' => $managementUnitLIst
             ]);
-
-        }else{
-
-            return back()->with('error','Something went wrong, please try again');
-
-        }
-
-
-
     }
 
 
