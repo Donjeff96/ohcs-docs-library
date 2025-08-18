@@ -4,6 +4,7 @@ namespace App\Http\Controllers\DocumentApprovall;
 
 use App\Http\Controllers\Controller;
 use App\Models\DocumentLibrary;
+use App\Models\PersonnelMain;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -21,7 +22,7 @@ class DocumentApprovalController extends Controller
         $decodeID = Crypt::decrypt($userID);
 
         
-        $userData = User::find($decodeID);
+        $userData = PersonnelMain::find($decodeID);
 
         $documentList = DocumentLibrary::where([['user_id',$decodeID],['status','Pending']])->get();
 
