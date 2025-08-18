@@ -83,12 +83,6 @@ Route::get('home',[DashBoardController::class,'index'])->name('home');
 
 
 
-/* Staff Album */
-
-Route::get('staff-list-search',[UserAlbumController::class,'index'])->name('staff-list-search');
-Route::post('staff-list-search-process',[UserAlbumController::class,'listStaffProcess'])->name('staff-list-search-process');
-
-/*End  Staff Album */
 
 /* Staff */
 
@@ -148,7 +142,7 @@ Route::get('documentation-fetch-user-bio-data-pdf/{username}/{path}',[Documentat
 Route::get('bulk-documentation-fetch-user-bio-data/{userName}',[DocumentationController::class,'bulkStaffUploadInformation'])->name('bulk-documentation-fetch-user-bio-data');
 
 
-Route::get('my-documentation',[MyDocumentationController::class,'myDocuments'])->name('my-documentation');
+
 Route::post('list-document-with-type',[MyDocumentationController::class,'getDocumentTypeDocuments'])->name('list-document-with-type');
 
 Route::get('approve-users-documents/{userID}',[DocumentApprovalController::class,'approvalDocumentView'])->name('approve-users-documents');
@@ -166,12 +160,6 @@ Route::get('my-profile-bioinformation',[MyProfileController::class,'viewStaffBio
 /* Approval */
 Route::get('pending-documentation-list',[DocumentApprovalController::class,'pendingApprovalView'])->name('pending-documentation-list');
 /* End Approval */
-
-
-/* Divisional  */
-Route::get('list-divisional-staffs',[DivisionalUnitController::class,'index'])->name('list-divisional-staffs');
-Route::post('list-divisional-staffs-process',[DivisionalUnitController::class,'fetchDivisionalStaffs'])->name('list-divisional-staffs-process');
-Route::get('my-divisional-staff',[DivisionalUnitController::class,'myDivisionView'])->name('my-divisional-staff');
 
 /* Dashboard  */
 Route::get('dashboard-list-staff/{parameter}',[DashBoardController::class,'listDashboardStaffs'])->name('dashboard-list-staff');

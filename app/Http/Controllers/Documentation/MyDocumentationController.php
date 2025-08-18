@@ -15,23 +15,7 @@ class MyDocumentationController extends Controller
         $this->middleware(['auth']);
     }
 
-    public function myDocuments (){
 
-        $userData =  User::find(auth()->user()->id);
-        $documentType = DocumentType::get();
-
-        $documentList = DocumentLibrary::where([['user_id',auth()->user()->id],['status','Active']])->get();
-
-       
-         return view('documentation.my-profile-documents',[
-             'userData' => $userData,
-             'documentType' => $documentType,
-             'documentList' => $documentList,
-             'pdfData' => '',
-             'userName' => trim(auth()->user()->username)
-         ]);
-
-    }
 
     public function getDocumentTypeDocuments (Request $request){
         
