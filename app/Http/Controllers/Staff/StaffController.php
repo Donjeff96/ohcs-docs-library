@@ -183,6 +183,10 @@ class StaffController extends Controller
            $documentType = DocumentType::get();
            $jobQualificationInformation = JobQualificationInformation::where('user_id',$userData->id)->orderBy('id','DESC')->limit(1)->get();
            $managementUnitLIst = ManagementUnit::get();
+
+           $documentList = DocumentLibrary::where('user_id',$userData->id)->get();
+
+           
             return view('staff.staff-bio-data',[
                 
                 'userData' => $userData,
@@ -194,7 +198,8 @@ class StaffController extends Controller
                 'hQualifiaction' => $hQualifiaction,
                 'documentType' => $documentType,
                 'jobQualificationInformation' => $jobQualificationInformation,
-                'managementUnitLIst' => $managementUnitLIst
+                'managementUnitLIst' => $managementUnitLIst,
+                'documentList' => $documentList
             ]);
     }
 

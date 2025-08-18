@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DocumentClassification;
 use App\Models\DocumentLibrary;
 use App\Models\DocumentType;
+use App\Models\PersonnelMain;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -175,9 +176,9 @@ class DocumentationController extends Controller
             'files' => 'required'
         ]);
 
-        $userData = User::find($decodeID);
+        $userData = PersonnelMain::find($decodeID);
 
-        $userDocumentPath = public_path($userData->username.'/');
+        $userDocumentPath = public_path($userData->serial_number.'/');
 
         if(!File::isDirectory($userDocumentPath)){
 
@@ -199,8 +200,8 @@ class DocumentationController extends Controller
 
                     $classificationWithoutWhiteSpace = str_replace(" ",'',$documentTypeData[0]->name);
 
-                    $documentNamePath = $userData->username.'/'.$classificationWithoutWhiteSpace.'-'.auth()->user()->id.'-mof-'.time().rand(1,1000).'.'.$file->extension();
-                    $file->move(public_path($userData->username),$documentNamePath);
+                    $documentNamePath = $userData->serial_number.'/'.$classificationWithoutWhiteSpace.'-'.auth()->user()->id.'-mof-'.time().rand(1,1000).'.'.$file->extension();
+                    $file->move(public_path($userData->serial_number),$documentNamePath);
 
                     $uploadDocument = new DocumentLibrary();
                     $uploadDocument->user_id = $decodeID;
