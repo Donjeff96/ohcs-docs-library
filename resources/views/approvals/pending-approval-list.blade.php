@@ -33,9 +33,10 @@
                                     <thead>
                                         <tr>
                                             <th></th>
+                                            <th>SN</th>
                                             <th>Name</th>
-                                            <th>E-mail</th>
-                                            <th>Unit/Division</th>
+                                            <th>Institution</th>
+                                            <th>Rank</th>
                                             <th>No. of Document</th>
                                             <th></th>
                                         </tr>
@@ -45,17 +46,13 @@
                                         @foreach ($pendingDocumentation as $pendingDocumentationItem)
                                             <tr>
                                                 <td align="center">
-                                                    @if (!empty($pendingDocumentationItem->getUserDetails()->photoUrl))
-                                                    <img src="data:image/jpeg;base64,{{$pendingDocumentationItem->getUserDetails()->photoUrl}}" alt="people" height="50" width="50">
-                                                    
-                                                    @else
-                                                    <img src="{{asset('avater.png')}}" alt="people" height="50" width="50">
-                                                    @endif
+                                                    <img src="{{asset('images/file_image.png')}}" alt="people" height="30" width="30">
                                                 </td>
+                                                 <td>{{$pendingDocumentationItem->getUserDetails()->serial_number}}</td>
                                                 <td>{{$pendingDocumentationItem->getUserDetails()->name}}</td>
-                                                <td>{{$pendingDocumentationItem->getUserDetails()->email}}</td>
-                                                <td align="center">{{$pendingDocumentationItem->getUserDetails()->category}}</td>
-                                                <td><b style="color:red;">{{$pendingDocumentationItem->pendingDocumentAwaiting()}} Pending {{Str::plural('Document',$pendingDocumentationItem->pendingDocumentAwaiting())}}</b></td>
+                                                <td>{{$pendingDocumentationItem->getUserDetails()->getInstitution()->name}}</td>
+                                                 <td>{{$pendingDocumentationItem->getUserDetails()->getRank()->name}}</td>
+                                                <td><small style="color:red;">{{$pendingDocumentationItem->pendingDocumentAwaiting()}} Pending {{Str::plural('Document',$pendingDocumentationItem->pendingDocumentAwaiting())}}</small></td>
                                                 <td><a target="_blank" href="{{route('approve-users-documents',Crypt::encrypt($pendingDocumentationItem->getUserDetails()->id))}}" class="btn btn-success btn-md"><i class="fa fa-list"></i> List Records</a></td>
                                             </tr>
                                         @endforeach

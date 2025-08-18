@@ -22,7 +22,7 @@ class DocumentLibrary extends Model
 
     public function getUserDetails (){
 
-        return User::find($this->user_id);
+        return PersonnelMain::find($this->user_id);
     }
 
     public function pendingDocumentAwaiting (){

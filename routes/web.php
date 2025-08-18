@@ -5,24 +5,17 @@ use App\Http\Controllers\Authenticate\AuthenticateController;
 use App\Http\Controllers\Authenticate\PrivillegeController;
 use App\Http\Controllers\Authenticate\UserController;
 use App\Http\Controllers\DashBoardController;
-use App\Http\Controllers\Deferred\DeferredController;
-use App\Http\Controllers\DivisionalUnit\DivisionalUnitController;
 use App\Http\Controllers\DocumentApprovall\DocumentApprovalController;
 use App\Http\Controllers\Documentation\DocumentationController;
 use App\Http\Controllers\Documentation\MyDocumentationController;
-use App\Http\Controllers\Holiday\HolidayController;
-use App\Http\Controllers\Leave\ApplyForLeave;
-use App\Http\Controllers\Leave\HrLeaveApproval;
-use App\Http\Controllers\Leave\LeaveActionsController;
-use App\Http\Controllers\Leave\LeaveController;
+
 use App\Http\Controllers\MyProfile\MyProfileController;
 use App\Http\Controllers\Report\ReportController;
 use App\Http\Controllers\Reports\LeaveReport;
 use App\Http\Controllers\Staff\StaffBioController;
 use App\Http\Controllers\Staff\StaffController;
-use App\Http\Controllers\UserAlbum\UserAlbumController;
 use App\Http\Controllers\UserCategory\UserCategoryController;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+
 
 /*
 |--------------------------------------------------------------------------
