@@ -84,20 +84,19 @@
                                                                 <p align="center" style="display: none; color: limegreen;" id="wait"><img src="{{ asset('images/spinner-grey.gif')}}" > Loading, please wait ...</p>
                                                                 <div id="result"></div>
                                                                 <table class="table table-bordered">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Document</th>
-                                                                            <th></th>
-                                                                            <th>Action</th>
-                                                                        </tr>
-                                                                    </thead>
                                                                     <tbody>
+                                                                        <tr>
+                                                                            <td align="center"><b>Document</b></td>
+                                                                            <td></td>
+                                                                            <td align="center"><b>Action</b></td>
+                                                                            
+                                                                        </tr>
                                                                         @foreach ($documentList as $documentitem)
                                                                             <tr>
                                                                                 <td>{{$documentitem->getDocumentClassification()->name}}</td>
-                                                                                <td align="center"><a  id="pdfViewerBtn" data-id="{{asset($documentitem->document_path)}}"><i class="fa fa-file-pdf"></i> View</a> </td>
+                                                                                <td align="center"><a style="color:blue;"  id="pdfViewerBtn" data-id="{{asset($documentitem->document_path)}}"><i class="fa fa-file-pdf"></i> View</a> </td>
                                                                                 <td>
-                                                                                    <select name="setStatus" id="setStatus" class="orm-control form-select">
+                                                                                    <select name="setStatus" id="setStatus" class="form-control form-select">
                                                                                         <option value="" data-id="{{$documentitem->id}}">choose status</option>
                                                                                         <option value="Approve" data-id="{{$documentitem->id}}">Approve </option>
                                                                                         <option value="Disapprove" data-id="{{$documentitem->id}}">Disapprove</option>

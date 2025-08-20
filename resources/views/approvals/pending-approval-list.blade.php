@@ -48,7 +48,7 @@
                                                 <td align="center">
                                                     <img src="{{asset('images/file_image.png')}}" alt="people" height="30" width="30">
                                                 </td>
-                                                 <td>{{$pendingDocumentationItem->getUserDetails()->serial_number}}</td>
+                                                 <td><b>{{$pendingDocumentationItem->getUserDetails()->serial_number}}</b></td>
                                                 <td>{{$pendingDocumentationItem->getUserDetails()->name}}</td>
                                                 <td>{{$pendingDocumentationItem->getUserDetails()->getInstitution()->name}}</td>
                                                  <td>{{$pendingDocumentationItem->getUserDetails()->getRank()->name}}</td>
