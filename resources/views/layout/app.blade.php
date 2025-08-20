@@ -212,7 +212,7 @@
         <!-- start section footer -->
         <div class="footer">
             <div class="copyright">
-                <p class="mb-0">Copyright © Designed &amp; Developed by <a href="uxign.html" target="_blank">MOFICT TEAM</a>
+                <p class="mb-0">Copyright © Designed &amp; Developed by <a href="uxign.html" target="_blank">OHCS ICT TEAM</a>
                     
                         {{Date('Y')}}
                     
