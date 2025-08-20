@@ -96,7 +96,7 @@
                                
                                 <div class="mt-3">
                                     <h4>{{auth()->user()->name}}</h4>
-                                    <p class="text-secondary mb-1">{{auth()->user()->category}}</p>
+                                    <p class="text-secondary mb-1">{{auth()->user()->userGrade()}}</p>
                                     <p class="text-muted font-size-sm">{{auth()->user()->email}}</p>
                                     <button class="btn btn-success">{{auth()->user()->userCategory()}}</button>
                                     <button class="btn btn-outline-success">{{auth()->user()->status}}</button>
