@@ -60,52 +60,40 @@
                             <table id="example1" class="display nowrap">
                                 <thead>
                                     <tr>
-                                        <th># </th>
-                                        <th>Name</th>
-                                        <th>Title</th>
-                                        <th>Username</th>
-                                        <th>Email</th>
-                                        <th>Unit / Division</th>
+                                            <th>Created Date</th>
+                                            <th>File Number</th>
+                                            <th>Name</th>
+                                            <th>Gender</th>
+                                            <th>Institution</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
-                                    @for ($i = 1; $i <= (int)session('count'); $i++)
-                                    <tr>
-                                        
-                                        <td align="center">
-                                            @if (key_exists('thumbnailphoto',session('data')[$i-1]))
-                                            <img src="data:image/jpeg;base64,{{base64_encode(session('data')[$i-1]['thumbnailphoto'][0])}}" alt="people" height="40" width="40">
+                             
+
+                                      @foreach (session('data') as $item)
+                                        <tr>
                                             
-                                            @else
-                                            <img src="{{asset('avater.png')}}" alt="people" height="40" width="40">
-                                            @endif
-                                        </td>
-                                        <td><b>{{ session('data')[$i-1]['displayname'][0]}}</b></td>
-                                        <td>
-                                            @if (key_exists('title',session('data')[$i-1]))
-                                            {{ session('data')[$i-1]['title'][0]}}
-                                            @else
-                                            <b style="color: red;">Not available</b>
-                                            @endif
-                                        </td>
-                                        <td>{{ session('data')[$i-1]['samaccountname'][0]}}</td>
-                                        <td>{{ session('data')[$i-1]['userprincipalname'][0]}}</td>
-                                        <td>{{auth()->user()->getUsrDivision(session('data')[$i-1]['dn'])}}</td>
-                                        <td>
+                                            <td>{{$item->created_at}}</td>
+                                            <td><b>{{$item->file_number}}</b></td>
+                                            <td>{{$item->name}}</td>
+                                            <td> {{$item->grader}}</td>
+                                          
+                                            <td> {{$item->getInstitution()->name}}</td>
+                                            <td>
                                             @if (auth()->user()->user_cat == 6)
 
-                                            <a href="{{route('documentation-fetch-user-bio-data',Crypt::encrypt(session('data')[$i-1]['userprincipalname'][0]))}}"> <span class='fas fa-upload' style="color:green;"></span> </a>
+                                            <a href="{{route('documentation-fetch-user-bio-data',Crypt::encrypt($item->id))}}"> <span class='fas fa-upload' style="color:green;"></span> </a>
                                                 
                                             @else
-                                            <a href="{{route('documentation-fetch-user-bio-data',Crypt::encrypt(session('data')[$i-1]['userprincipalname'][0]))}}"> <span class='fas fa-upload' style="color:blue;"></span> </a>
+                                            <a href="{{route('documentation-fetch-user-bio-data',Crypt::encrypt($item->id))}}"> <span class='fas fa-upload' style="color:blue;"></span> </a>
                                             @endif
                                            
                                             
                                         </td>
-                                    </tr>
-                                    @endfor
+                                        </tr>
+                                        @endforeach
                                 </tbody>
                             </table> 
                             @endsession

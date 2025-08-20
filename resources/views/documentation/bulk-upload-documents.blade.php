@@ -24,7 +24,7 @@
             </div>
 
 
-            <div class="row">
+             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
@@ -33,24 +33,14 @@
                                     <div class="media align-self-start">
                                         
 
-                                            @if (key_exists('thumbnailphoto',$data[0]))
-                                            <img src="data:image/jpeg;base64,{{base64_encode($data[0]['thumbnailphoto'][0])}}" alt="image" class="rounded-circle shadow" width="90">
-                                            
-                                            @else
                                             <img alt="image" class="rounded-circle shadow" width="90"
-                                            src="{{asset('assets/images/client.jpg')}}">
-                                            @endif
+                                            src="{{asset('images/file_image.png')}}">
                                         <div class="pulse-css"></div>
                                     </div>
                                     <div class="media-body">
-                                        <h2 class="mb-2">{{$data[0]['displayname'][0]}}</h2>
-                                        <p class="mb-md-2 mb-sm-4 mb-2">{{ $data[0]['userprincipalname'][0]}}</p>
-                                            <p class="mb-md-2 mb-sm-4 mb-2">@if (key_exists('title',$data[0]))
-                                                {{ $data[0]['title'][0]}}
-                                                @else
-                                                <b style="color: red;">Not available</b>
-                                                @endif
-                                            </p>
+                                        <h2 class="mb-2">{{ $userData->name }}</h2>
+                                        <p class="mb-md-2 mb-sm-4 mb-2">SN: {{ $userData->file_number }}</p>
+                                            <p class="mb-md-2 mb-sm-4 mb-2"><i class="fa fa-building"></i> {{ $userData->getInstitution()->name }}</p>
                                     </div>
                                 </div>
                             </div>
